@@ -1,0 +1,21 @@
+"id","time","date","remarks","route","waiting","routeTime","rating","important"
+1,"12:02","July 21st","Bus was clean and the driver was very friendly.","12","11 minutes","11 minutes",4,true
+2,"13:15","July 22nd","Waited a bit too long at the stop, but the ride was smooth.","13","7 minutes","10 minutes",2,
+3,"14:30","July 23rd","Appreciated the air conditioning on a hot day!","14","15 minutes","13 minutes",5,
+4,"15:45","July 24th","Bus arrived early and I almost missed it.","12","5 minutes","9 minutes",3,true
+5,"16:00","July 25th","The bus was overcrowded and uncomfortable.","15","20 minutes","18 minutes",1,
+6,"17:10","July 26th","Driver was helpful with directions.","13","8 minutes","12 minutes",4,
+7,"18:20","July 27th","The bus was late, but the ride was quick.","14","12 minutes","14 minutes",2,
+8,"19:30","July 28th","Great experience overall, will use again.","15","10 minutes","11 minutes",5,
+9,"08:05","July 29th","Bus was on time and the seats were comfortable.","12","3 minutes","8 minutes",5,
+10,"09:40","July 29th","Missed my stop because the driver didn't announce it.","13","6 minutes","10 minutes",2,true
+11,"10:15","July 30th","Loved the free WiFi on the bus!","14","9 minutes","12 minutes",4,
+12,"11:50","July 30th","Bus was delayed due to traffic, but the driver kept us informed.","15","18 minutes","20 minutes",3,
+13,"13:25","July 31st","The bus was very clean and smelled fresh.","12","4 minutes","9 minutes",5,
+14,"14:55","July 31st","Driver was rude when I asked a question.","13","10 minutes","13 minutes",1,true
+15,"16:10","August 1st","Quick and efficient ride, no complaints.","14","7 minutes","10 minutes",4,
+16,"17:35","August 1st","Standing room only, but the ride was fast.","15","12 minutes","15 minutes",3,
+17,"18:50","August 2nd","The bus was late and very crowded.","12","16 minutes","17 minutes",2,
+18,"20:05","August 2nd","Excellent service, will recommend to friends.","13","5 minutes","8 minutes",5,
+19,"21:20","August 3rd","The bus was too cold inside.","14","8 minutes","11 minutes",3,
+20,"22:35","August 3rd","Driver waited for me when I was running late. Thank you!","15","2 minutes","7 minutes",5,true

@@ -1,0 +1,3 @@
+[submodule "route-ai-frontend"]
+	path = route-ai-frontend
+	url = https://github.com/LAKSHYAJAIN16/route.ai-frontend
