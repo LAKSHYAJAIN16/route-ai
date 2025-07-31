@@ -1,0 +1,3 @@
+[submodule "route-ai-mobile-app"]
+	path = route-ai-mobile-app
+	url = https://github.com/LAKSHYAJAIN16/route.ai-mobile
