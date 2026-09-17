@@ -1,135 +1,78 @@
-# route.ai  
-**The future of public transit**
+# route.ai
 
-## Overview
+I started this because I kept noticing how bad suburban transit is for anyone without a car — especially teens. Growing up in the GTA, buses out here have sparse routes, inflexible schedules, and long waits, and building new infrastructure to fix that is slow and expensive. route.ai is my attempt at getting more out of the routes that already exist, using data instead of concrete.
 
-**route.ai** is a transit optimization platform designed to improve public transportation for youth in suburban areas, starting with the Greater Toronto Area (GTA). By combining real-time data analysis with user feedback, we help governments and transit agencies make smarter decisions without costly infrastructure changes.
+## The idea
 
----
+Two pieces:
 
-## The Problem
+**A dashboard for transit agencies.** It looks at real-time ridership data to suggest where routes should flex, collects and filters rider feedback so the useful signal doesn't get buried, and uses an LLM to turn all of that (data + feedback) into something a planner can actually act on, with dashboards to visualize where things are working and where they aren't.
 
-Youth living in suburban regions like the GTA often face limited access to public transit. With fewer routes, inflexible schedules, and long wait times, commuting becomes inefficient and unreliable—especially for students and teens without access to a car. Building new routes or stops is expensive and slow.
+**A rider-facing app.** It detects whether you're walking to a stop, waiting, or already on a bus without you having to check in manually, lets you fire off quick feedback in a couple taps, and has a "SafeRide" mode for younger riders to link their account to a parent/guardian with restricted data collection.
 
----
+The goal is basically: cheaper for agencies to operate, shorter/smarter trips for riders, and enough real feedback flowing back that route decisions aren't just guesses.
 
-## The Solution
+## How it's put together
 
-**route.ai** provides a two-part solution:
-
-### 1. Government Platform
-
-- **Dynamic Routing**  
-  Routes are updated based on real-time ridership data and demand, reducing dormant lines and improving efficiency.
-
-- **Feedback Filtering**  
-  Riders can submit feedback through the app. Our platform filters and analyzes this input to surface trends and actionable suggestions.
-
-- **Insight Generation**  
-  Uses large language models to interpret data and feedback at scale, helping transit authorities make informed decisions.
-
-- **Data Visualization**  
-  Offers clean, intuitive dashboards to help planners quickly identify performance gaps and opportunities.
-
-### 2. Mobile App
-
-- **Smart Stop Detection**  
-  Automatically detects whether a user is walking to, waiting at, or on a bus—no manual check-in required.
-
-- **Quick Feedback Submission**  
-  Riders can report issues or make suggestions in a few taps.
-
-- **SafeRide Profiles for Minors**  
-  Allows underage users to connect their accounts to a parent or guardian, with options to restrict data collection.
-
----
-
-## Impact
-
-- Reduced government operating costs through more efficient routing  
-- Shorter, smarter trips that reduce emissions  
-- Improved rider satisfaction and safety  
-- Better civic engagement through real-time feedback  
-- A flexible blueprint for suburban transit optimization that scales
-
----
-
-## Tech Stack
-
-- **Government dashboard (`route-ai-app`):** Next.js 15 + React 19 + TypeScript, Tailwind CSS, Recharts for charts, Mapbox GL / react-map-gl for maps, OpenAI SDK for LLM-based insight generation, Firebase for auth/data
-- **Rider mobile app (`route-ai-mobile`):** React Native + Expo
-- **Marketing site (`route-ai-frontend`):** Next.js + TypeScript, Tailwind CSS (git submodule, separate repo)
-- **Data pipeline (`route-ai-data`):** Node.js scripts for exporting Firebase data to CSV
-- **Route optimization (`route-ai-ai`):** Python (pandas/Jupyter notebook) analyzing bus stop and ridership CSVs to suggest optimized stops
-- **Database:** Firebase
-- **Cloud/DevOps:** Google Cloud
-
-## Repository Structure
-
-This is a monorepo of independent sub-projects (one, `route-ai-frontend`, is a git submodule; the others are plain subdirectories):
+It's a monorepo of mostly-independent sub-projects:
 
 ```
 route.ai/
-├── route-ai-app/         # Next.js government/transit-authority dashboard (main product)
-├── route-ai-frontend/    # Next.js public marketing site (git submodule)
+├── route-ai-app/         # Next.js dashboard for transit authorities (the main product)
+├── route-ai-frontend/    # Next.js marketing site (git submodule, separate repo)
 ├── route-ai-mobile/      # React Native / Expo rider app
-├── route-ai-data/        # Node.js scripts to export Firebase data to CSV
-└── route-ai-ai/          # Python notebook/script for bus stop route optimization
+├── route-ai-data/        # Node scripts that export Firebase data to CSV
+└── route-ai-ai/          # Python notebook that crunches ridership CSVs into stop suggestions
 ```
 
-## Setup
+Stack-wise: the dashboard is Next.js 15 + React 19 + TypeScript with Tailwind, Recharts for charts, Mapbox GL for maps, the OpenAI SDK for the insight generation, and Firebase underneath. The mobile app is React Native/Expo. The marketing site is Next.js. Everything's on Firebase for data/auth and Google Cloud for hosting.
 
-Clone with submodules so `route-ai-frontend` is populated:
+## Running it
+
+Clone with submodules so `route-ai-frontend` actually shows up:
 
 ```bash
 git clone --recurse-submodules https://github.com/LAKSHYAJAIN16/route.ai
-# or, if already cloned:
+# already cloned without them?
 git submodule update --init --recursive
 ```
 
-Each sub-project has its own dependencies and is run independently.
+Each piece runs on its own:
 
-### Government dashboard (`route-ai-app`)
-
+**Dashboard**
 ```bash
 cd route-ai-app
 npm install
-npm run dev    # http://localhost:3000
+npm run dev    # localhost:3000
 ```
+Needs Firebase + OpenAI credentials as env vars — check `route-ai-app/src/lib` for what it expects.
 
-Requires Firebase and OpenAI credentials (see `route-ai-app/src/lib` for config) via environment variables.
-
-### Marketing site (`route-ai-frontend`)
-
+**Marketing site**
 ```bash
 cd route-ai-frontend
 npm install
 npm run dev
 ```
 
-### Mobile app (`route-ai-mobile`)
-
+**Mobile app**
 ```bash
 cd route-ai-mobile
 npm install
-npm start       # Expo dev server; press a/i/w for Android/iOS/web
+npm start   # then a/i/w for Android/iOS/web
 ```
 
-### Data export scripts (`route-ai-data`)
-
+**Data export scripts**
 ```bash
 cd route-ai-data
 npm install
 node export_to_csv.js
 ```
 
-### Route optimization (`route-ai-ai`)
-
+**Route optimization notebook**
 ```bash
 cd route-ai-ai
 pip install pandas jupyter
 jupyter notebook Route_Optimization.ipynb
 # or: python Route_Optimization.py
 ```
-
-Reads the bundled bus stop/ridership CSVs (`bus_route_stops_map.csv`, `bus_stop_summary_with_coords.csv`, etc.) and outputs suggested new stops to `final_top_stop_suggestions.csv` / `proposed_new_stop_coords.csv`.
+It reads the bundled bus stop/ridership CSVs (`bus_route_stops_map.csv`, `bus_stop_summary_with_coords.csv`, etc.) and spits out suggested new stops in `final_top_stop_suggestions.csv` / `proposed_new_stop_coords.csv`.
